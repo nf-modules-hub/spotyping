@@ -1,29 +1,31 @@
 
-ch_refFILE = Channel.value("$baseDir/refFILE")
-
-inputFilePattern = "./*_{R1,R2}.fastq.gz"
-Channel.fromFilePairs(inputFilePattern)
-        .into {  ch_in_PROCESS }
+Channel.fromFilePairs("./*_{R1,R2}.p.fastq")
+        .into { ch_in_spotyping }
 
 
+/*
+###############
+Spotyping
+###############
+*/
 
-process process {
-#    publishDir 'results/PROCESS'
-#    container 'PROCESS_CONTAINER'
 
+
+process spotyping {
+    container 'abhi18av/spotyping'
+    publishDir 'results/spotyping'
 
     input:
-    set genomeFileName, file(genomeReads) from ch_in_PROCESS
+    set genomeFileName, file(genomeReads) from ch_in_spotyping
 
     output:
-    path("""${PROCESS_OUTPUT}""") into ch_out_PROCESS
-
+    path """${genomeName}.txt""" into ch_out_spotyping
 
     script:
-    #FIXME
     genomeName= genomeFileName.toString().split("\\_")[0]
+
+    """
+    python /SpoTyping-v2.0/SpoTyping-v2.0-commandLine/SpoTyping.py ./${genomeReads[0]} -o ${genomeName}.txt
+    """
     
-    """
-    CLI PROCESS
-    """
 }
