@@ -1,6 +1,15 @@
+#!/usr/bin/env nextflow
 
-Channel.fromFilePairs("./*_{R1,R2}.p.fastq")
-        .into { ch_in_spotyping }
+/*
+################
+params
+################
+*/
+
+
+params.saveBy = 'copy'
+
+
 
 
 /*
@@ -10,10 +19,15 @@ Spotyping
 */
 
 
+Channel.fromFilePairs("./*_{R1,R2}.p.fastq")
+        .into { ch_in_spotyping }
+
+
+
 
 process spotyping {
     container 'abhi18av/spotyping'
-    publishDir 'results/spotyping'
+    publishDir 'results/spotyping', mode: params.saveBy
 
     input:
     set genomeFileName, file(genomeReads) from ch_in_spotyping
