@@ -33,7 +33,7 @@ process spotyping {
     set genomeFileName, file(genomeReads) from ch_in_spotyping
 
     output:
-    tuple path """${genomeName}.txt""", 
+    tuple file '*.txt', 
           file 'SITVIT*.xls' into ch_out_spotyping
 
     script:
