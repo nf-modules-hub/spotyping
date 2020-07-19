@@ -34,7 +34,7 @@ process spotyping {
 
     output:
     path """${genomeName}.txt""",
-         """{SITVIT*.xls}""" into ch_out_spotyping
+         """SITVIT*.xls""" into ch_out_spotyping
 
     script:
     genomeName= genomeFileName.toString().split("\\_")[0]
