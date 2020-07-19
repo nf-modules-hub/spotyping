@@ -33,7 +33,7 @@ process spotyping {
     set genomeFileName, file(genomeReads) from ch_in_spotyping
 
     output:
-    path """${genomeName}.txt""" into ch_out_spotyping
+    tuple file('*.txt'), file('SITVIT*.xls') into ch_out_spotyping
 
     script:
     genomeName= genomeFileName.toString().split("\\_")[0]
