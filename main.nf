@@ -1,28 +1,29 @@
 #!/usr/bin/env nextflow
 
+
 /*
-################
-params
-################
+#==============================================
+code documentation
+#==============================================
 */
 
+/*
+#==============================================
+params
+#==============================================
+*/
 
 params.saveBy = 'copy'
 
 
-
-
 /*
-###############
-Spotyping
-###############
+#==============================================
+spotyping
+#==============================================
 */
-
 
 Channel.fromFilePairs("./*_{R1,R2}.p.fastq")
         .into { ch_in_spotyping }
-
-
 
 
 process spotyping {
@@ -33,13 +34,20 @@ process spotyping {
     set genomeFileName, file(genomeReads) from ch_in_spotyping
 
     output:
-    tuple file('*.txt'), file('SITVIT*.xls') into ch_out_spotyping
+    tuple file('*.txt'),
+            file('SITVIT*.xls') into ch_out_spotyping
 
     script:
-    genomeName= genomeFileName.toString().split("\\_")[0]
+    genomeName = genomeFileName.toString().split("\\_")[0]
 
     """
     python /SpoTyping-v2.0/SpoTyping-v2.0-commandLine/SpoTyping.py ./${genomeReads[0]} -o ${genomeName}.txt
     """
-    
+
 }
+
+/*
+#==============================================
+# extra
+#==============================================
+*/
