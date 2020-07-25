@@ -32,7 +32,7 @@ spotyping
 */
 
 Channel.fromFilePairs(inputRawFilePattern)
-        .into { ch_in_spotyping }
+        .set { ch_in_spotyping }
 
 
 process spotyping {
