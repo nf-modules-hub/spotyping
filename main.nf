@@ -13,8 +13,16 @@ params
 #==============================================
 */
 
+params.resultsDir = 'results/spotyping'
 params.saveBy = 'copy'
+params.trimmed = false
 params.R2 = false
+
+inputUntrimmedRawFilePattern = "./*_{R1,R2}.fastq.gz"
+
+inputTrimmedRawFilePattern = "./*_{R1,R2}.p.fastq.gz"
+
+inputRawFilePattern = params.trimmed ? inputTrimmedRawFilePattern : inputUntrimmedRawFilePattern
 
 
 /*
@@ -23,13 +31,13 @@ spotyping
 #==============================================
 */
 
-Channel.fromFilePairs("./*_{R1,R2}.p.fastq")
+Channel.fromFilePairs(inputRawFilePattern)
         .into { ch_in_spotyping }
 
 
 process spotyping {
     container 'abhi18av/spotyping'
-    publishDir 'results/spotyping', mode: params.saveBy
+    publishDir params.resultsDir, mode: params.saveBy
 
     input:
     set genomeFileName, file(genomeReads) from ch_in_spotyping
