@@ -14,6 +14,7 @@ params
 */
 
 params.saveBy = 'copy'
+params.R2 = false
 
 
 /*
@@ -39,9 +40,10 @@ process spotyping {
 
     script:
     genomeName = genomeFileName.toString().split("\\_")[0]
+    genomeReadToBeAnalyzed = params.R2 ? genomeReads[1] : genomeReads[0]
 
     """
-    python /SpoTyping-v2.0/SpoTyping-v2.0-commandLine/SpoTyping.py ./${genomeReads[0]} -o ${genomeName}.txt
+    python /SpoTyping-v2.0/SpoTyping-v2.0-commandLine/SpoTyping.py ./${genomeReadToBeAnalyzed} -o ${genomeName}.txt
     """
 
 }
