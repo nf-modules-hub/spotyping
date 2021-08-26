@@ -33,7 +33,8 @@ process SPOTYPING {
     tuple val(genomeName), path(genomeReads)
 
     output:
-    tuple file('*.txt'), path('SITVIT*.xls')
+    path('*.txt')
+    path('SITVIT*.xls'),  optional:true
 
     script:
     def query_arg = params.query ? "" : "--noQuery"
