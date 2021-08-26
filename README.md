@@ -1,35 +1,32 @@
 # Nextflow wrapper for `spotyping` process.
 
-## Pre-requisites
+## Pre-requisites 
 
-- Nextflow
-- Docker 
+- Conda
+  - Nextflow
+  - Spotyping
 
-**NOTE** If you plan to setup a basic server, then you can refer [minimal-nextflow-setup](https://github.com/nextflow-hub/minimal-nextflow-setup)
+
+```sh
+conda create -c bioconda -n spotyping spotyping nextflow
+```
+
 
 ## Usage
 
 ```
-nextflow run https://github.com/nextflow-hub/spotyping
+nextflow run https://github.com/nf-modules/spotyping
 ```
 
 ## Options
 
-
-- `R2`
-
-By default, the process assumes that the first read `R1 or 1` needs to be analyzed, which could be customized using this option
-
-```
-nextflow run https://github.com/nextflow-hub/spotyping --R2
-```
 
 - `filePattern`
 
 By default, the process assumes the files to follow the `*_{R1,R2}.fastq.gz` pattern, which could be customized using this option
 
 ```
-nextflow run https://github.com/nextflow-hub/spotyping --filePattern './*_{1,2}.fastq.gz'
+nextflow run https://github.com/nf-modules/spotyping --filePattern './*_{1,2}.fastq.gz'
 ```
 
 - `resultsDir`
@@ -37,7 +34,7 @@ nextflow run https://github.com/nextflow-hub/spotyping --filePattern './*_{1,2}.
 By default, it stores the result files locally inside the `results` directory.
 
 ```
-nextflow run https://github.com/nextflow-hub/spotyping --resultsDir /path/to/custom/resultsDir
+nextflow run https://github.com/nf-modules/spotyping --resultsDir /path/to/custom/resultsDir
 ```
 
 - `saveMode`
@@ -47,14 +44,14 @@ By default, the pipeline publishes the results in the `resultsDir` by copying th
 You can update this behavior by simply specifying the alternative such as `move` or `link` etc. 
 
 ```
-nextflow run https://github.com/nextflow-hub/spotyping --saveMode move
+nextflow run https://github.com/nf-modules/spotyping --saveMode move
 ```
 
 For more information please refer [Nextflow documentation](https://www.nextflow.io/docs/latest/process.html#publishdir)
 
 ## Customizing the script
 
-The sole purpose of process wrappers in `nextflow-hub` is to keep the code small, clean and hackable with some basic knowledge of `nextflow` scripting.
+The sole purpose of process wrappers in `nf-modules` is to keep the code small, clean and hackable with some basic knowledge of `nextflow` scripting.
 
 If you have specific requirements, you are encouraged to fork/clone and update your version to accomodate your needs. 
 

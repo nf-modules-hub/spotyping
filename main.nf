@@ -1,5 +1,6 @@
 #!/usr/bin/env nextflow
 
+nextflow.enable.dsl = 2
 
 /*
 #==============================================
@@ -15,7 +16,6 @@ params
 
 params.resultsDir = 'results/spotyping'
 params.saveMode = 'copy'
-params.R2 = false
 params.filePattern = "./*_{R1,R2}.fastq.gz"
 
 
@@ -25,33 +25,29 @@ spotyping
 #==============================================
 */
 
-Channel.fromFilePairs(params.filePattern)
-        .set { ch_in_spotyping }
 
-
-process spotyping {
-    container 'abhi18av/spotyping'
+process SPOTYPING {
     publishDir params.resultsDir, mode: params.saveMode
 
     input:
-    set genomeFileName, file(genomeReads) from ch_in_spotyping
+    tuple val(genomeFileName), path(genomeReads)
 
     output:
-    tuple file('*.txt'),
-            file('SITVIT*.xls') into ch_out_spotyping
+    tuple file('*.txt'), path('SITVIT*.xls')
 
     script:
-    genomeName = genomeFileName.toString().split("\\_")[0]
-    genomeReadToBeAnalyzed = params.R2 ? genomeReads[1] : genomeReads[0]
 
     """
-    python /SpoTyping-v2.0/SpoTyping-v2.0-commandLine/SpoTyping.py ./${genomeReadToBeAnalyzed} -o ${genomeName}.txt
+    SpoTyping.py  ${genomeReads[0]} ${genomeReads[1]} -o ${genomeName}.txt --noQuery
     """
 
 }
 
-/*
-#==============================================
-# extra
-#==============================================
-*/
+
+workflow {
+
+    input = Channel.fromFilePairs(params.filePattern)
+
+    SPOTYPING(input)
+
+}
