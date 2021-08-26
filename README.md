@@ -6,11 +6,17 @@
   - Nextflow
   - Spotyping
 
+It is expected that you already have setup conda environment with the required packages.
 
 ```sh
 conda create -c bioconda -n spotyping spotyping nextflow
 ```
 
+Activate the environment
+
+```sh
+conda activate spotyping
+```
 
 ## Usage
 
@@ -19,6 +25,14 @@ nextflow run https://github.com/nf-modules/spotyping
 ```
 
 ## Options
+
+- `query` 
+
+By default, the `spotyping` queries the databaset. To suppress this behavior, you can use the `query` parameter.
+
+```
+nextflow run https://github.com/nf-modules/spotyping --query false
+```
 
 
 - `filePattern`
@@ -48,6 +62,10 @@ nextflow run https://github.com/nf-modules/spotyping --saveMode move
 ```
 
 For more information please refer [Nextflow documentation](https://www.nextflow.io/docs/latest/process.html#publishdir)
+
+## Cleanup space
+
+**NOTE:** Once the analysis is completed and the expected results have been completed you can delete the `work` directory.
 
 ## Customizing the script
 
