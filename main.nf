@@ -30,7 +30,7 @@ process SPOTYPING {
     publishDir params.resultsDir, mode: params.saveMode
 
     input:
-    tuple val(genomeFileName), path(genomeReads)
+    tuple val(genomeName), path(genomeReads)
 
     output:
     tuple file('*.txt'), path('SITVIT*.xls')
