@@ -17,7 +17,7 @@ params
 params.resultsDir = 'results/spotyping'
 params.saveMode = 'copy'
 params.filePattern = "./*_{R1,R2}*.fastq.gz"
-
+params.query = true
 
 /*
 #==============================================
@@ -36,9 +36,10 @@ process SPOTYPING {
     tuple file('*.txt'), path('SITVIT*.xls')
 
     script:
+    def query_arg = query ? "" : "--noQuery"
 
     """
-    SpoTyping.py  ${genomeReads[0]} ${genomeReads[1]} -o ${genomeName}.txt --noQuery
+    SpoTyping.py  ${genomeReads[0]} ${genomeReads[1]} -o ${genomeName}.txt ${query_arg}
     """
 
 }
