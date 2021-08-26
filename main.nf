@@ -16,7 +16,7 @@ params
 
 params.resultsDir = 'results/spotyping'
 params.saveMode = 'copy'
-params.filePattern = "./*_{R1,R2}.fastq.gz"
+params.filePattern = "./*_{R1,R2}*.fastq.gz"
 
 
 /*
