@@ -36,7 +36,7 @@ process SPOTYPING {
     tuple file('*.txt'), path('SITVIT*.xls')
 
     script:
-    def query_arg = query ? "" : "--noQuery"
+    def query_arg = params.query ? "" : "--noQuery"
 
     """
     SpoTyping.py  ${genomeReads[0]} ${genomeReads[1]} -o ${genomeName}.txt ${query_arg}
